@@ -13,6 +13,7 @@ import ContactPage from "@/pages/ContactPage";
 import GalleryPage from "@/pages/GalleryPage";
 import TestimonialsPage from "@/pages/TestimonialsPage";
 
+import AboutPage from "@/pages/AboutPage";
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import StudentsPage from "@/pages/admin/StudentsPage";
@@ -25,7 +26,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
-      <Route path="/about" component={HomePage} />
+      <Route path="/about" component={AboutPage} />
       <Route path="/courses" component={CoursesPage} />
       <Route path="/courses/:slug" component={CourseDetailPage} />
       <Route path="/director" component={DirectorPage} />
