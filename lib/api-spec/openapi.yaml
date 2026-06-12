@@ -1,22 +1,41 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: THE GUIDE International Academy API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: courses
+    description: Course management
+  - name: students
+    description: Student management
+  - name: certificates
+    description: Certificate management
+  - name: gallery
+    description: Gallery management
+  - name: testimonials
+    description: Testimonials management
+  - name: contact
+    description: Contact inquiries
+  - name: admin
+    description: Admin authentication
+  - name: dashboard
+    description: Dashboard statistics
+  - name: verificationLogs
+    description: Certificate verification logs
+  - name: settings
+    description: Site settings
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +43,1247 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ── Courses ──────────────────────────────────────────────────
+  /courses:
+    get:
+      operationId: listCourses
+      tags: [courses]
+      summary: List all courses
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: featured
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+    post:
+      operationId: createCourse
+      tags: [courses]
+      summary: Create a course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+
+  /courses/{id}:
+    get:
+      operationId: getCourse
+      tags: [courses]
+      summary: Get course by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+    patch:
+      operationId: updateCourse
+      tags: [courses]
+      summary: Update a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+    delete:
+      operationId: deleteCourse
+      tags: [courses]
+      summary: Delete a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Students ──────────────────────────────────────────────────
+  /students:
+    get:
+      operationId: listStudents
+      tags: [students]
+      summary: List all students
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Students list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentsPage"
+    post:
+      operationId: createStudent
+      tags: [students]
+      summary: Create a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+
+  /students/bulk-import:
+    post:
+      operationId: bulkImportStudents
+      tags: [students]
+      summary: Bulk import students from CSV/Excel data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BulkImportInput"
+      responses:
+        "200":
+          description: Import result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BulkImportResult"
+
+  /students/{id}:
+    get:
+      operationId: getStudent
+      tags: [students]
+      summary: Get student by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Student details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+    patch:
+      operationId: updateStudent
+      tags: [students]
+      summary: Update a student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+    delete:
+      operationId: deleteStudent
+      tags: [students]
+      summary: Delete a student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Certificates ──────────────────────────────────────────────
+  /certificates:
+    get:
+      operationId: listCertificates
+      tags: [certificates]
+      summary: List all certificates
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Certificates list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CertificatesPage"
+    post:
+      operationId: createCertificate
+      tags: [certificates]
+      summary: Create a certificate record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CertificateInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+
+  /certificates/verify:
+    get:
+      operationId: verifyCertificate
+      tags: [certificates]
+      summary: Verify a certificate by number
+      parameters:
+        - name: number
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationResult"
+
+  /certificates/{id}:
+    patch:
+      operationId: updateCertificate
+      tags: [certificates]
+      summary: Update a certificate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CertificateUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+    delete:
+      operationId: deleteCertificate
+      tags: [certificates]
+      summary: Delete a certificate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Gallery ──────────────────────────────────────────────────
+  /gallery:
+    get:
+      operationId: listGallery
+      tags: [gallery]
+      summary: List gallery images
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Gallery images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryImage"
+    post:
+      operationId: createGalleryImage
+      tags: [gallery]
+      summary: Add a gallery image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryImageInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryImage"
+
+  /gallery/{id}:
+    delete:
+      operationId: deleteGalleryImage
+      tags: [gallery]
+      summary: Delete a gallery image
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Testimonials ──────────────────────────────────────────────
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      summary: List testimonials
+      parameters:
+        - name: approved
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      summary: Add a testimonial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /testimonials/{id}:
+    patch:
+      operationId: updateTestimonial
+      tags: [testimonials]
+      summary: Update a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+    delete:
+      operationId: deleteTestimonial
+      tags: [testimonials]
+      summary: Delete a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Contact ──────────────────────────────────────────────────
+  /contact:
+    get:
+      operationId: listInquiries
+      tags: [contact]
+      summary: List contact inquiries
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Inquiries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Inquiry"
+    post:
+      operationId: createInquiry
+      tags: [contact]
+      summary: Submit a contact inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+
+  /contact/{id}/resolve:
+    patch:
+      operationId: resolveInquiry
+      tags: [contact]
+      summary: Mark inquiry as resolved
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResolveInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+
+  /contact/{id}:
+    delete:
+      operationId: deleteInquiry
+      tags: [contact]
+      summary: Delete an inquiry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  # ── Admin Auth ────────────────────────────────────────────────
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCredentials"
+      responses:
+        "200":
+          description: Login result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLoginResult"
+
+  /admin/logout:
+    post:
+      operationId: adminLogout
+      tags: [admin]
+      summary: Admin logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+
+  /admin/me:
+    get:
+      operationId: getAdminMe
+      tags: [admin]
+      summary: Get current admin session
+      responses:
+        "200":
+          description: Admin info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminInfo"
+
+  # ── Dashboard ────────────────────────────────────────────────
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get dashboard statistics
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /dashboard/recent-verifications:
+    get:
+      operationId: getRecentVerifications
+      tags: [dashboard]
+      summary: Get recent certificate verifications
+      responses:
+        "200":
+          description: Recent verifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VerificationLog"
+
+  # ── Site Settings ────────────────────────────────────────────
+  /settings:
+    get:
+      operationId: getSettings
+      tags: [settings]
+      summary: Get site settings
+      responses:
+        "200":
+          description: Settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteSettings"
+    patch:
+      operationId: updateSettings
+      tags: [settings]
+      summary: Update site settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SiteSettingsUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteSettings"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    DeleteResult:
+      type: object
+      required: [success]
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+
+    # ── Course ──────────────────────────────────────────────────
+    Course:
+      type: object
+      required: [id, title, slug, category, duration, description]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        category:
+          type: string
+        duration:
+          type: string
+        description:
+          type: string
+        eligibility:
+          type: ["string", "null"]
+        syllabus:
+          type: ["string", "null"]
+        careerOpportunities:
+          type: ["string", "null"]
+        certificationDetails:
+          type: ["string", "null"]
+        benefits:
+          type: ["string", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+        sortOrder:
+          type: integer
+        createdAt:
+          type: string
+
+    CourseInput:
+      type: object
+      required: [title, slug, category, duration, description]
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        category:
+          type: string
+        duration:
+          type: string
+        description:
+          type: string
+        eligibility:
+          type: string
+        syllabus:
+          type: string
+        careerOpportunities:
+          type: string
+        certificationDetails:
+          type: string
+        benefits:
+          type: string
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+        sortOrder:
+          type: integer
+
+    CourseUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        category:
+          type: string
+        duration:
+          type: string
+        description:
+          type: string
+        eligibility:
+          type: string
+        syllabus:
+          type: string
+        careerOpportunities:
+          type: string
+        certificationDetails:
+          type: string
+        benefits:
+          type: string
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+        sortOrder:
+          type: integer
+
+    # ── Student ──────────────────────────────────────────────────
+    Student:
+      type: object
+      required: [id, name, certificateNumber, courseName, completionDate, grade, status]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        photoUrl:
+          type: ["string", "null"]
+        certificateNumber:
+          type: string
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+        email:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    StudentInput:
+      type: object
+      required: [name, certificateNumber, courseName, completionDate, grade]
+      properties:
+        name:
+          type: string
+        photoUrl:
+          type: string
+        certificateNumber:
+          type: string
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+    StudentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        photoUrl:
+          type: string
+        certificateNumber:
+          type: string
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+    StudentsPage:
+      type: object
+      required: [data, total, page, limit]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Student"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    BulkImportInput:
+      type: object
+      required: [records]
+      properties:
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/StudentInput"
+
+    BulkImportResult:
+      type: object
+      required: [imported, failed, total]
+      properties:
+        imported:
+          type: integer
+        failed:
+          type: integer
+        total:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+
+    # ── Certificate ──────────────────────────────────────────────
+    Certificate:
+      type: object
+      required: [id, certificateNumber, studentName, courseName, completionDate, grade, status]
+      properties:
+        id:
+          type: integer
+        certificateNumber:
+          type: string
+        studentName:
+          type: string
+        studentPhotoUrl:
+          type: ["string", "null"]
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+        studentId:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+
+    CertificateInput:
+      type: object
+      required: [certificateNumber, studentName, courseName, completionDate, grade]
+      properties:
+        certificateNumber:
+          type: string
+        studentName:
+          type: string
+        studentPhotoUrl:
+          type: string
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+        studentId:
+          type: integer
+
+    CertificateUpdate:
+      type: object
+      properties:
+        certificateNumber:
+          type: string
+        studentName:
+          type: string
+        studentPhotoUrl:
+          type: string
+        courseName:
+          type: string
+        completionDate:
+          type: string
+        grade:
+          type: string
+        status:
+          type: string
+
+    CertificatesPage:
+      type: object
+      required: [data, total, page, limit]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Certificate"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    VerificationResult:
+      type: object
+      required: [found]
+      properties:
+        found:
+          type: boolean
+        certificate:
+          $ref: "#/components/schemas/Certificate"
+        verifiedAt:
+          type: string
+
+    # ── Gallery ──────────────────────────────────────────────────
+    GalleryImage:
+      type: object
+      required: [id, imageUrl, category]
+      properties:
+        id:
+          type: integer
+        imageUrl:
+          type: string
+        category:
+          type: string
+        title:
+          type: ["string", "null"]
+        description:
+          type: ["string", "null"]
+        sortOrder:
+          type: integer
+        createdAt:
+          type: string
+
+    GalleryImageInput:
+      type: object
+      required: [imageUrl, category]
+      properties:
+        imageUrl:
+          type: string
+        category:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        sortOrder:
+          type: integer
+
+    # ── Testimonial ──────────────────────────────────────────────
+    Testimonial:
+      type: object
+      required: [id, studentName, courseName, rating, review, approved]
+      properties:
+        id:
+          type: integer
+        studentName:
+          type: string
+        photoUrl:
+          type: ["string", "null"]
+        courseName:
+          type: string
+        rating:
+          type: integer
+        review:
+          type: string
+        designation:
+          type: ["string", "null"]
+        approved:
+          type: boolean
+        createdAt:
+          type: string
+
+    TestimonialInput:
+      type: object
+      required: [studentName, courseName, rating, review]
+      properties:
+        studentName:
+          type: string
+        photoUrl:
+          type: string
+        courseName:
+          type: string
+        rating:
+          type: integer
+        review:
+          type: string
+        designation:
+          type: string
+        approved:
+          type: boolean
+
+    TestimonialUpdate:
+      type: object
+      properties:
+        studentName:
+          type: string
+        photoUrl:
+          type: string
+        courseName:
+          type: string
+        rating:
+          type: integer
+        review:
+          type: string
+        designation:
+          type: string
+        approved:
+          type: boolean
+
+    # ── Contact ──────────────────────────────────────────────────
+    Inquiry:
+      type: object
+      required: [id, name, email, subject, message, status]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        subject:
+          type: string
+        message:
+          type: string
+        courseInterest:
+          type: ["string", "null"]
+        status:
+          type: string
+        createdAt:
+          type: string
+
+    InquiryInput:
+      type: object
+      required: [name, email, subject, message]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+        courseInterest:
+          type: string
+
+    ResolveInput:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+
+    # ── Admin ──────────────────────────────────────────────────
+    AdminCredentials:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    AdminLoginResult:
+      type: object
+      required: [success]
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+
+    AdminInfo:
+      type: object
+      required: [authenticated]
+      properties:
+        authenticated:
+          type: boolean
+        username:
+          type: ["string", "null"]
+
+    # ── Dashboard ──────────────────────────────────────────────
+    DashboardStats:
+      type: object
+      required: [totalStudents, totalCertificates, totalCourses, totalInquiries, pendingInquiries, recentVerificationsCount]
+      properties:
+        totalStudents:
+          type: integer
+        totalCertificates:
+          type: integer
+        totalCourses:
+          type: integer
+        totalInquiries:
+          type: integer
+        pendingInquiries:
+          type: integer
+        recentVerificationsCount:
+          type: integer
+
+    VerificationLog:
+      type: object
+      required: [id, certificateNumber, found, verifiedAt]
+      properties:
+        id:
+          type: integer
+        certificateNumber:
+          type: string
+        found:
+          type: boolean
+        ipAddress:
+          type: ["string", "null"]
+        verifiedAt:
+          type: string
+
+    # ── Settings ──────────────────────────────────────────────
+    SiteSettings:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: integer
+        instituteName:
+          type: string
+        tagline:
+          type: string
+        logoUrl:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        email:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        whatsapp:
+          type: ["string", "null"]
+        facebook:
+          type: ["string", "null"]
+        instagram:
+          type: ["string", "null"]
+        linkedin:
+          type: ["string", "null"]
+        youtube:
+          type: ["string", "null"]
+        heroTitle:
+          type: ["string", "null"]
+        heroSubtitle:
+          type: ["string", "null"]
+        heroBannerUrl:
+          type: ["string", "null"]
+
+    SiteSettingsUpdate:
+      type: object
+      properties:
+        instituteName:
+          type: string
+        tagline:
+          type: string
+        logoUrl:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        whatsapp:
+          type: string
+        facebook:
+          type: string
+        instagram:
+          type: string
+        linkedin:
+          type: string
+        youtube:
+          type: string
+        heroTitle:
+          type: string
+        heroSubtitle:
+          type: string
+        heroBannerUrl:
+          type: string

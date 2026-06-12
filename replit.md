@@ -1,19 +1,20 @@
-# [Project name]
+# THE GUIDE International Academy
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Premium safety/health/industrial/oil & gas certification training institute — full public website + admin management system.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `DATABASE_URL` — Postgres connection string, `SESSION_SECRET` — session signing
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
+- Frontend: React + Vite, Tailwind CSS, ShadCN UI, Framer Motion, Wouter
 - API: Express 5
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
@@ -22,23 +23,38 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `lib/api-spec/openapi.yaml` — source of truth for all API contracts
+- `lib/db/src/schema/` — Drizzle ORM schema (courses, students, certificates, gallery, testimonials, contact_inquiries, admins, verification_logs, settings)
+- `lib/api-client-react/src/generated/` — Orval-generated React Query hooks + Zod schemas
+- `artifacts/api-server/src/routes/` — all Express route handlers
+- `artifacts/guide-academy/src/` — React frontend (pages + components)
+- `artifacts/guide-academy/src/index.css` — theme tokens (navy/gold palette, Playfair Display + Inter fonts)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Contract-first API: OpenAPI spec → Orval codegen → typed hooks on client, Zod validation on server
+- Session-based admin auth with bcryptjs password hashing (express-session + SESSION_SECRET)
+- All public routes are unauthenticated; `/api/admin/*` routes are session-protected
+- Certificate verification logs every lookup in `verification_logs` table for audit trail
+- Courses use `slug` as the stable public identifier (URL-friendly)
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Public website**: Home, About, Courses (listing + detail), Director profile, Gallery, Testimonials, Contact form, Certificate Verification
+- **Admin Panel** (`/admin`): Dashboard stats, Students, Certificates, Courses, Gallery, Testimonials, Inquiries, Settings, Bulk Import
+- **Admin login**: username `admin`, password `admin123` (change in production)
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Deep navy + gold + white luxury aesthetic throughout
+- Playfair Display for headings, Inter for body text
+- Framer Motion animations on all page transitions and key sections
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Admin seeding: bcryptjs is only available in `artifacts/api-server` node_modules, not at workspace root — run seed scripts from that directory
+- API server binds to `$PORT` (8080 in dev) — all routes are prefixed `/api`
+- Frontend dev server runs on port 20321; global proxy routes `/` → guide-academy, `/api` → api-server
 
 ## Pointers
 
