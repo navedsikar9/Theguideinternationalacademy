@@ -127,9 +127,11 @@ export default function Footer() {
           <p className="text-white/50 text-sm">
             © {new Date().getFullYear()} THE GUIDE International Academy. All rights reserved. | Sikar, Rajasthan, India
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <Link href="/privacy" className="text-white/50 hover:text-white text-sm">Privacy Policy</Link>
             <Link href="/terms" className="text-white/50 hover:text-white text-sm">Terms of Service</Link>
+            <span className="text-white/20 text-sm">|</span>
+            <Link href="/admin/login" className="text-white/30 hover:text-white/70 text-xs transition-colors">Admin</Link>
           </div>
         </div>
       </div>
