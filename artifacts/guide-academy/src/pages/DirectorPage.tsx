@@ -2,7 +2,7 @@ import { Award, Shield, BookOpen, GraduationCap, CheckCircle2, Briefcase, Star }
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import directorPhoto from "@assets/file_000000009f2072099a707bcdf207370f_1781298907119.png";
+import directorPhoto from "@assets/file_000000003e9871fa93f3f1a7f5d270d2_1781391032795.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -29,18 +29,20 @@ export default function DirectorPage() {
               <div className="sticky top-28 space-y-6">
                 {/* Photo with gold shadow accent */}
                 <div className="relative">
+                  <div className="absolute -inset-4 bg-primary/15 rounded-3xl blur-2xl z-0" />
                   <div className="absolute inset-0 bg-[hsl(43,95%,52%)] translate-x-3 translate-y-3 rounded-2xl z-0 opacity-70"></div>
                   <img
                     src={directorPhoto}
-                    alt="Abdul Rashid Khokhar — Director, THE GUIDE International Academy"
+                    alt="Abdul Rashid Khokhar — Founder & Director, THE GUIDE International Academy"
                     className="relative z-10 w-full rounded-2xl shadow-2xl object-cover object-top aspect-[3/4]"
                   />
                 </div>
 
-                {/* Experience badge */}
-                <div className="bg-primary text-primary-foreground rounded-xl p-5 text-center shadow-lg">
+                {/* Founder badge */}
+                <div className="bg-sidebar rounded-xl p-5 text-center shadow-lg border border-primary/30">
+                  <div className="text-xs text-primary font-bold uppercase tracking-widest mb-1">Founder & Director</div>
                   <div className="text-5xl font-serif font-bold text-[hsl(43,95%,52%)] leading-none">17+</div>
-                  <div className="text-sm font-semibold tracking-widest uppercase mt-1 opacity-90">Years of Experience</div>
+                  <div className="text-sm font-semibold tracking-widest uppercase mt-1 text-white/80">Years of Experience</div>
                 </div>
 
                 {/* Credentials */}
@@ -89,7 +91,7 @@ export default function DirectorPage() {
                   Abdul Rashid Khokhar
                 </h1>
                 <p className="text-xl text-muted-foreground font-medium mb-6">
-                  Founder & Managing Director — THE GUIDE International Academy
+                  Founder & Director — THE GUIDE International Academy
                 </p>
 
                 <blockquote className="text-xl font-serif italic text-sidebar border-l-4 border-[hsl(43,95%,52%)] pl-6 py-2 bg-muted/30 rounded-r-xl p-6 leading-relaxed">
@@ -105,7 +107,7 @@ export default function DirectorPage() {
                     With over <strong className="text-foreground">17 years of dedicated experience</strong> in the Health, Safety, and Environment (HSE) sector, <strong className="text-foreground">Abdul Rashid Khokhar</strong> has established himself as a leading authority in occupational safety training, industrial risk management, and oil & gas safety compliance. His career began in the demanding environments of heavy industry and offshore operations, where he developed a deep, hands-on understanding of real-world safety challenges.
                   </p>
                   <p>
-                    Recognizing the critical gap between theoretical safety knowledge and its practical application, he founded <strong className="text-foreground">THE GUIDE International Academy</strong> — with a single, unwavering mission: to deliver world-class, internationally recognized safety training that transforms professionals into confident, competent safety leaders.
+                    Recognizing the critical gap between theoretical safety knowledge and its practical application, he founded <strong className="text-foreground">THE GUIDE International Academy</strong> in Sikar, Rajasthan — with a single, unwavering mission: to deliver world-class, internationally recognized safety training that transforms professionals into confident, competent safety leaders.
                   </p>
                   <p>
                     Under his leadership, the academy has grown into a premier institution partnering with globally recognized bodies including <strong className="text-foreground">NEBOSH, IOSH, and OSHA</strong>, offering both international certifications and national diplomas that are respected by employers across the Middle East, South Asia, and beyond.
@@ -132,13 +134,13 @@ export default function DirectorPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
                     "Successfully trained over 5,000 safety professionals across multiple countries.",
-                    "Founded THE GUIDE International Academy — a premier globally recognized training institute.",
+                    "Founded THE GUIDE International Academy — a premier globally recognized training institute in Sikar.",
                     "Authorized training partner for NEBOSH, IOSH, and OSHA international certification programs.",
                     "Trained professionals placed in top oil & gas, construction, and industrial firms worldwide.",
                     "17+ years of hands-on industry expertise in HSE, Oil & Gas, and industrial safety.",
-                    "Recipient of regional excellence awards in HSE education and professional development.",
+                    "Government registered institute recognized by regulatory bodies in Rajasthan.",
                   ].map((item, i) => (
-                    <div key={i} className="bg-muted/30 p-4 rounded-xl border border-border flex items-start gap-3">
+                    <div key={i} className="bg-muted/30 p-4 rounded-xl border border-border flex items-start gap-3 hover:border-primary/30 transition-colors">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                       <span className="text-muted-foreground text-sm leading-relaxed">{item}</span>
                     </div>
@@ -150,8 +152,8 @@ export default function DirectorPage() {
               <motion.section custom={4} variants={fadeUp} initial="hidden" animate="visible">
                 <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Industry Expertise</h2>
                 <div className="flex flex-wrap gap-3">
-                  {["Oil & Gas", "Construction Safety", "Industrial Safety", "Fire Safety", "Occupational Health", "Risk Assessment", "NEBOSH", "IOSH", "OSHA", "HSE Management", "Incident Investigation", "Permit to Work"].map((tag) => (
-                    <span key={tag} className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
+                  {["Oil & Gas", "Construction Safety", "Industrial Safety", "Fire Safety", "Occupational Health", "Risk Assessment", "NEBOSH", "IOSH", "OSHA", "OTHM", "NVQ", "HSE Management", "Incident Investigation", "Permit to Work", "Scaffolding Inspection"].map((tag) => (
+                    <span key={tag} className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20 hover:bg-primary/20 transition-colors">
                       {tag}
                     </span>
                   ))}

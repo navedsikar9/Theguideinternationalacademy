@@ -21,7 +21,7 @@ export default function VerifyPage() {
 
   const { data: verificationResult, isLoading, isFetching } = useVerifyCertificate(
     { number: searchQuery },
-    { query: { enabled: !!searchQuery } }
+    { query: { queryKey: ["verify", searchQuery], enabled: !!searchQuery } }
   );
 
   const handleSearch = (e: React.FormEvent) => {

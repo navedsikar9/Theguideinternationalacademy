@@ -1,10 +1,10 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowRight, Award, Users, BookOpen, Clock, ShieldCheck, GraduationCap, MessageCircle } from "lucide-react";
+import { ArrowRight, Award, Users, BookOpen, Clock, ShieldCheck, GraduationCap, MessageCircle, CheckCircle2, Star, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import directorPhoto from "@assets/file_000000009f2072099a707bcdf207370f_1781298907119.png";
+import directorPhoto from "@assets/file_000000003e9871fa93f3f1a7f5d270d2_1781391032795.png";
 
 export default function HomePage() {
   return (
@@ -22,6 +22,21 @@ export default function HomePage() {
 
               {/* Left — Text */}
               <div>
+                {/* Trust badges */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-wrap gap-2 mb-5"
+                >
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold">
+                    <CheckCircle2 className="w-3 h-3" /> ISO 9001:2015 Certified
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/80 text-xs font-bold">
+                    <ShieldCheck className="w-3 h-3" /> Government Registered Institute
+                  </span>
+                </motion.div>
+
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -57,7 +72,7 @@ export default function HomePage() {
                   transition={{ duration: 0.7, delay: 0.45 }}
                   className="text-lg md:text-xl text-white/75 font-light mb-9 max-w-xl leading-relaxed"
                 >
-                  We Guide the Future Leaders. Elevate your career with world-class safety certifications and professional diplomas recognized globally.
+                  We Guide the Future Leaders. Elevate your career with world-class safety certifications and professional diplomas recognized globally. Based in Sikar, Rajasthan.
                 </motion.p>
 
                 <motion.div
@@ -73,7 +88,9 @@ export default function HomePage() {
                     <Link href="/verify-certificate">Verify Certificate</Link>
                   </Button>
                   <Button size="lg" variant="ghost" className="text-white hover:bg-transparent hover:text-primary font-semibold text-base px-4 py-5" asChild>
-                    <Link href="/contact">Contact Us</Link>
+                    <a href="https://wa.me/919509174366" target="_blank" rel="noreferrer">
+                      <MessageCircle className="mr-2 w-5 h-5" /> WhatsApp Us
+                    </a>
                   </Button>
                 </motion.div>
 
@@ -101,6 +118,8 @@ export default function HomePage() {
                 className="hidden lg:flex justify-center"
               >
                 <div className="relative w-[380px]">
+                  {/* Glassmorphism glow */}
+                  <div className="absolute -inset-4 bg-primary/20 rounded-3xl blur-2xl z-0" />
                   <div className="absolute inset-0 bg-[hsl(43,95%,52%)] translate-x-4 translate-y-4 rounded-2xl z-0 opacity-60" />
                   <img
                     src={directorPhoto}
@@ -110,7 +129,7 @@ export default function HomePage() {
                   {/* Name card overlay */}
                   <div className="absolute bottom-4 left-4 right-4 z-20 bg-sidebar/90 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                     <div className="text-white font-serif font-bold text-lg leading-tight">Abdul Rashid Khokhar</div>
-                    <div className="text-white/60 text-xs mt-0.5">Founder & Managing Director</div>
+                    <div className="text-white/60 text-xs mt-0.5">Founder & Director</div>
                     <div className="flex items-center gap-1.5 mt-2">
                       <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center">
                         <GraduationCap className="w-3 h-3 text-primary" />
@@ -125,6 +144,38 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── Trust Badges Section ── */}
+        <section className="py-10 bg-white border-b border-border">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex flex-wrap justify-center items-center gap-8">
+              {[
+                { icon: <CheckCircle2 className="w-5 h-5 text-primary" />, label: "ISO 9001:2015 Certified", sub: "Quality Management" },
+                { icon: <ShieldCheck className="w-5 h-5 text-primary" />, label: "Government Registered", sub: "Govt. of Rajasthan" },
+                { icon: <Award className="w-5 h-5 text-primary" />, label: "NEBOSH Authorized", sub: "UK Certification" },
+                { icon: <Star className="w-5 h-5 text-primary" />, label: "5,000+ Alumni", sub: "Across Industries" },
+                { icon: <GraduationCap className="w-5 h-5 text-primary" />, label: "17+ Years Experience", sub: "Since 2007" },
+              ].map((badge, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="flex items-center gap-3 px-5 py-3 rounded-xl bg-muted/50 border border-border"
+                >
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    {badge.icon}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground text-sm">{badge.label}</div>
+                    <div className="text-xs text-muted-foreground">{badge.sub}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Stats Section ── */}
         <section className="py-20 bg-white border-b border-border">
           <div className="container mx-auto px-4 md:px-6">
@@ -133,7 +184,7 @@ export default function HomePage() {
                 { icon: <Users className="w-8 h-8 text-primary" />, stat: "5,000+", label: "Students Trained" },
                 { icon: <ShieldCheck className="w-8 h-8 text-primary" />, stat: "10,000+", label: "Certificates Issued" },
                 { icon: <Clock className="w-8 h-8 text-primary" />, stat: "17+", label: "Years Experience" },
-                { icon: <BookOpen className="w-8 h-8 text-primary" />, stat: "25+", label: "Professional Courses" },
+                { icon: <BookOpen className="w-8 h-8 text-primary" />, stat: "18+", label: "Professional Courses" },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -170,10 +221,11 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="relative max-w-sm mx-auto">
+                  <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-xl z-0" />
                   <div className="absolute inset-0 bg-[hsl(43,95%,52%)] translate-x-4 translate-y-4 rounded-2xl z-0 opacity-60" />
                   <img
                     src={directorPhoto}
-                    alt="Abdul Rashid Khokhar — Founder & Managing Director"
+                    alt="Abdul Rashid Khokhar — Founder & Director"
                     className="relative z-10 w-full rounded-2xl shadow-xl object-cover object-top aspect-[3/4]"
                   />
                 </div>
@@ -198,7 +250,7 @@ export default function HomePage() {
                   "Our mission is not just to provide certification, but to instill a culture of safety and professional excellence that transforms workplaces globally."
                 </blockquote>
                 <p className="text-muted-foreground mb-3 leading-relaxed">
-                  — <strong className="text-foreground">Abdul Rashid Khokhar</strong>, Founder & Managing Director
+                  — <strong className="text-foreground">Abdul Rashid Khokhar</strong>, Founder & Director
                 </p>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
                   With over 17 years of industry experience in oil & gas and industrial safety, he built THE GUIDE Academy to bridge the gap between certification and real-world competence. Our graduates are trusted by top employers worldwide.
@@ -226,33 +278,87 @@ export default function HomePage() {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-12 text-lg">
               From NEBOSH & IOSH to national safety diplomas — we have a course that fits your career goal.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto mb-10">
-              {[
-                { title: "NEBOSH IGC", tag: "International" },
-                { title: "IOSH Managing Safely", tag: "International" },
-                { title: "OSHA 30-Hour", tag: "International" },
-                { title: "Oil & Gas Safety", tag: "National Diploma" },
-                { title: "Fire Fighting", tag: "National Diploma" },
-              ].map((course, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="bg-muted/30 border border-border rounded-xl p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all"
-                >
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <ShieldCheck className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="font-semibold text-foreground text-sm mb-1">{course.title}</div>
-                  <div className="text-xs text-muted-foreground">{course.tag}</div>
-                </motion.div>
-              ))}
+
+            {/* International */}
+            <div className="mb-8">
+              <div className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-5">International Courses</div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
+                {[
+                  { title: "NEBOSH (UK)", tag: "International" },
+                  { title: "IOSH (UK)", tag: "International" },
+                  { title: "OSHA (USA)", tag: "International" },
+                  { title: "OTHM (UK)", tag: "International" },
+                  { title: "NVQ (UK)", tag: "International" },
+                ].map((course, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    className="bg-muted/30 border border-border rounded-xl p-5 text-center hover:border-primary/40 hover:shadow-sm transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                      <ShieldCheck className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="font-semibold text-foreground text-sm mb-1">{course.title}</div>
+                    <div className="text-xs text-muted-foreground">{course.tag}</div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
+
+            {/* National */}
+            <div className="mb-10">
+              <div className="inline-block px-4 py-1 rounded-full bg-sidebar/10 text-sidebar text-xs font-bold uppercase tracking-widest mb-5">National Diplomas</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                {[
+                  "Oil & Gas Safety", "Fire Fighting", "Construction Safety", "Industrial Safety",
+                  "Fire & Safety", "First Aid & CPR", "HSE", "Scaffolding Inspector"
+                ].map((name, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="bg-sidebar/5 border border-sidebar/15 rounded-lg p-3 text-center hover:border-sidebar/30 transition-all"
+                  >
+                    <div className="font-medium text-sidebar text-sm">{name}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8" asChild>
               <Link href="/courses">View All Courses <ArrowRight className="ml-2 w-4 h-4" /></Link>
             </Button>
+          </div>
+        </section>
+
+        {/* ── Instagram CTA ── */}
+        <section className="py-16 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)' }} />
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                  <Instagram className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-serif font-bold text-white">Follow Our Journey</h3>
+                  <p className="text-white/70">@the_guide_fire_safety_academy — Latest updates, events & success stories</p>
+                </div>
+              </div>
+              <a
+                href="https://www.instagram.com/the_guide_fire_safety_academy"
+                target="_blank"
+                rel="noreferrer"
+                className="px-8 py-3 rounded-full bg-white text-purple-900 font-bold text-base hover:scale-105 transition-transform shadow-xl"
+              >
+                Follow on Instagram
+              </a>
+            </div>
           </div>
         </section>
 
@@ -264,9 +370,14 @@ export default function HomePage() {
             <p className="text-xl text-white/75 max-w-2xl mx-auto mb-10">
               Join thousands of successful professionals who have transformed their careers with our internationally recognized certifications.
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-10 py-6 rounded-md" asChild>
-              <Link href="/contact">Enroll Now <ArrowRight className="ml-2 w-5 h-5" /></Link>
-            </Button>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-10 py-6 rounded-md" asChild>
+                <Link href="/contact">Enroll Now <ArrowRight className="ml-2 w-5 h-5" /></Link>
+              </Button>
+              <Button size="lg" variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10 font-semibold text-lg px-10 py-6 rounded-md" asChild>
+                <a href="tel:+919509174366">Call: +91 9509174366</a>
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -276,7 +387,7 @@ export default function HomePage() {
 
       {/* Floating WhatsApp */}
       <a
-        href="https://wa.me/12345678900"
+        href="https://wa.me/919509174366"
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform z-50"

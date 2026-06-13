@@ -12,13 +12,19 @@ import VerifyPage from "@/pages/VerifyPage";
 import ContactPage from "@/pages/ContactPage";
 import GalleryPage from "@/pages/GalleryPage";
 import TestimonialsPage from "@/pages/TestimonialsPage";
-
 import AboutPage from "@/pages/AboutPage";
+
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import StudentsPage from "@/pages/admin/StudentsPage";
 import CertificatesPage from "@/pages/admin/CertificatesPage";
 import BulkImportPage from "@/pages/admin/BulkImportPage";
+import CoursesAdminPage from "@/pages/admin/CoursesAdminPage";
+import GalleryAdminPage from "@/pages/admin/GalleryAdminPage";
+import TestimonialsAdminPage from "@/pages/admin/TestimonialsAdminPage";
+import InquiriesAdminPage from "@/pages/admin/InquiriesAdminPage";
+import SettingsAdminPage from "@/pages/admin/SettingsAdminPage";
+import VerificationLogsPage from "@/pages/admin/VerificationLogsPage";
 
 const queryClient = new QueryClient();
 
@@ -40,13 +46,12 @@ function Router() {
       <Route path="/admin/students" component={StudentsPage} />
       <Route path="/admin/certificates" component={CertificatesPage} />
       <Route path="/admin/bulk-import" component={BulkImportPage} />
-      
-      {/* Fallbacks for missing admin pages */}
-      <Route path="/admin/courses" component={DashboardPage} />
-      <Route path="/admin/gallery" component={DashboardPage} />
-      <Route path="/admin/testimonials" component={DashboardPage} />
-      <Route path="/admin/inquiries" component={DashboardPage} />
-      <Route path="/admin/settings" component={DashboardPage} />
+      <Route path="/admin/courses" component={CoursesAdminPage} />
+      <Route path="/admin/gallery" component={GalleryAdminPage} />
+      <Route path="/admin/testimonials" component={TestimonialsAdminPage} />
+      <Route path="/admin/inquiries" component={InquiriesAdminPage} />
+      <Route path="/admin/settings" component={SettingsAdminPage} />
+      <Route path="/admin/verification-logs" component={VerificationLogsPage} />
 
       <Route component={NotFound} />
     </Switch>

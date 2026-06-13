@@ -8,15 +8,17 @@ import { useListGallery } from "@workspace/api-client-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 
-const CATEGORIES = ["All", "Classrooms", "Students", "Events", "Workshops", "Certifications", "Training Sessions"];
+const CATEGORIES = ["All", "Campus", "Classroom", "Training", "Events", "Students", "Certifications"];
 
 const FALLBACK_IMAGES = [
-  { id: 1, imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800", category: "Classrooms", title: "Main Lecture Hall" },
-  { id: 2, imageUrl: "https://images.unsplash.com/photo-1541888062831-294025114751?q=80&w=800", category: "Training Sessions", title: "Practical Fire Safety" },
-  { id: 3, imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=800", category: "Events", title: "Annual Convocation" },
-  { id: 4, imageUrl: "https://images.unsplash.com/photo-1531496730074-83b638c0a7ac?q=80&w=800", category: "Students", title: "Batch of 2023" },
-  { id: 5, imageUrl: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=800", category: "Workshops", title: "Industrial Safety Drill" },
-  { id: 6, imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800", category: "Classrooms", title: "Interactive Session" },
+  { id: 1, imageUrl: "/gallery/classroom.jpg", category: "Classroom", title: "Training Session" },
+  { id: 2, imageUrl: "/gallery/director-office.jpg", category: "Campus", title: "Director's Office" },
+  { id: 3, imageUrl: "/gallery/group-students.jpg", category: "Students", title: "Students with Director" },
+  { id: 4, imageUrl: "/gallery/students-director.jpg", category: "Students", title: "Batch with Director" },
+  { id: 5, imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800", category: "Classroom", title: "Lecture Hall" },
+  { id: 6, imageUrl: "https://images.unsplash.com/photo-1541888062831-294025114751?q=80&w=800", category: "Training", title: "Practical Fire Safety Training" },
+  { id: 7, imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=800", category: "Events", title: "Annual Convocation" },
+  { id: 8, imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800", category: "Classroom", title: "Interactive Session" },
 ];
 
 export default function GalleryPage() {
@@ -28,7 +30,11 @@ export default function GalleryPage() {
     { query: { queryKey: ['gallery', selectedCategory] } }
   );
 
-  const images = (dbImages && dbImages.length > 0) ? dbImages : (selectedCategory === "All" ? FALLBACK_IMAGES : FALLBACK_IMAGES.filter(img => img.category === selectedCategory));
+  const images = (dbImages && dbImages.length > 0)
+    ? dbImages
+    : (selectedCategory === "All"
+        ? FALLBACK_IMAGES
+        : FALLBACK_IMAGES.filter(img => img.category === selectedCategory));
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -36,12 +42,22 @@ export default function GalleryPage() {
 
       <main className="flex-1 pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="mb-12 text-center max-w-3xl mx-auto">
+          <motion.div
+            className="mb-12 text-center max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="h-px w-12 bg-primary" />
+              <span className="text-primary font-bold tracking-widest uppercase text-sm">Our Campus</span>
+              <div className="h-px w-12 bg-primary" />
+            </div>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">Life at THE GUIDE</h1>
             <p className="text-muted-foreground text-lg">
-              Explore our world-class facilities, dynamic training sessions, and the vibrant student community.
+              Explore our world-class facilities, dynamic training sessions, and the vibrant student community at our Sikar campus.
             </p>
-          </div>
+          </motion.div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {CATEGORIES.map(category => (
@@ -49,7 +65,7 @@ export default function GalleryPage() {
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category)}
-                className={`rounded-full px-6 ${selectedCategory === category ? "bg-sidebar text-white" : "border-border text-foreground hover:bg-muted"}`}
+                className={`rounded-full px-6 ${selectedCategory === category ? "bg-sidebar text-white shadow-md" : "border-border text-foreground hover:bg-muted"}`}
               >
                 {category}
               </Button>
@@ -70,12 +86,12 @@ export default function GalleryPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="relative group rounded-xl overflow-hidden cursor-pointer break-inside-avoid shadow-sm border border-border"
+                  className="relative group rounded-xl overflow-hidden cursor-pointer break-inside-avoid shadow-sm border border-border hover:shadow-lg transition-shadow"
                   onClick={() => setLightboxImage(image.imageUrl)}
                 >
-                  <img 
-                    src={image.imageUrl} 
-                    alt={image.title || "Gallery image"} 
+                  <img
+                    src={image.imageUrl}
+                    alt={image.title || "Gallery image"}
                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
@@ -102,16 +118,16 @@ export default function GalleryPage() {
       <Dialog open={!!lightboxImage} onOpenChange={(open) => !open && setLightboxImage(null)}>
         <DialogContent className="max-w-5xl p-1 bg-transparent border-none shadow-none">
           <div className="relative">
-            <button 
+            <button
               onClick={() => setLightboxImage(null)}
               className="absolute -top-12 right-0 text-white hover:text-primary transition-colors bg-black/50 p-2 rounded-full"
             >
               <X className="w-6 h-6" />
             </button>
             {lightboxImage && (
-              <img 
-                src={lightboxImage} 
-                alt="Enlarged view" 
+              <img
+                src={lightboxImage}
+                alt="Enlarged view"
                 className="w-full max-h-[85vh] object-contain rounded-lg"
               />
             )}

@@ -59,7 +59,7 @@ export default function TestimonialsPage() {
                   
                   <div className="flex items-center gap-4 mt-auto">
                     <Avatar className="w-12 h-12 border-2 border-primary/20">
-                      <AvatarImage src={testimonial.photoUrl || ""} alt={testimonial.studentName} />
+                      <AvatarImage src={(testimonial as any).photoUrl || ""} alt={testimonial.studentName} />
                       <AvatarFallback className="bg-sidebar text-white font-bold">
                         {testimonial.studentName.split(' ').map(n => n[0]).join('').substring(0, 2)}
                       </AvatarFallback>
