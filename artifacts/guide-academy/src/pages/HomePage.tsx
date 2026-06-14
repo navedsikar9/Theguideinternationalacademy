@@ -29,11 +29,11 @@ export default function HomePage() {
                   transition={{ duration: 0.5 }}
                   className="flex flex-wrap gap-2 mb-5"
                 >
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold">
-                    <CheckCircle2 className="w-3 h-3" /> ISO 9001:2015 Certified
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-white text-xs font-bold">
+                    <CheckCircle2 className="w-3 h-3 text-primary" /> ISO <span className="text-primary font-extrabold">9001:2015</span> Certified
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/80 text-xs font-bold">
-                    <ShieldCheck className="w-3 h-3" /> Government Registered Institute
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">
+                    <ShieldCheck className="w-3 h-3 text-primary" /> Government Registered Institute
                   </span>
                 </motion.div>
 
@@ -94,19 +94,33 @@ export default function HomePage() {
                   </Button>
                 </motion.div>
 
-                {/* Accreditations inline */}
+                {/* Courses We Offer (replaces "Authorized by") */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 0.9 }}
-                  className="mt-12 flex flex-wrap gap-6 items-center"
+                  className="mt-10"
                 >
-                  <span className="text-white/40 text-xs uppercase tracking-widest font-semibold">Authorized by</span>
-                  {["NEBOSH", "IOSH", "OSHA", "OTHM", "NVQ"].map((name) => (
-                    <span key={name} className="text-white/60 font-serif text-lg tracking-wider border-b border-primary/60 pb-0.5 hover:text-white transition-colors">
-                      {name}
-                    </span>
-                  ))}
+                  <span className="text-white/40 text-xs uppercase tracking-widest font-semibold block mb-3">Courses We Offer</span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { name: "NEBOSH", tag: "UK" },
+                      { name: "IOSH", tag: "UK" },
+                      { name: "OSHA", tag: "USA" },
+                      { name: "OTHM", tag: "UK" },
+                      { name: "NVQ", tag: "UK" },
+                      { name: "Fire Safety", tag: "" },
+                      { name: "Oil & Gas", tag: "" },
+                      { name: "First Aid", tag: "" },
+                    ].map(({ name, tag }) => (
+                      <Link key={name} href="/courses">
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/5 border border-white/15 hover:border-primary/40 hover:bg-primary/10 transition-all cursor-pointer">
+                          <span className="text-white text-xs font-semibold">{name}</span>
+                          {tag && <span className="text-primary text-[10px] font-bold">({tag})</span>}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
                 </motion.div>
               </div>
 
@@ -118,7 +132,6 @@ export default function HomePage() {
                 className="hidden lg:flex justify-center"
               >
                 <div className="relative w-[380px]">
-                  {/* Glassmorphism glow */}
                   <div className="absolute -inset-4 bg-primary/20 rounded-3xl blur-2xl z-0" />
                   <div className="absolute inset-0 bg-[hsl(43,95%,52%)] translate-x-4 translate-y-4 rounded-2xl z-0 opacity-60" />
                   <img
@@ -126,7 +139,6 @@ export default function HomePage() {
                     alt="Abdul Rashid Khokhar — Founder, THE GUIDE International Academy"
                     className="relative z-10 w-full rounded-2xl shadow-2xl object-cover object-top aspect-[3/4]"
                   />
-                  {/* Name card overlay */}
                   <div className="absolute bottom-4 left-4 right-4 z-20 bg-sidebar/90 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                     <div className="text-white font-serif font-bold text-lg leading-tight">Abdul Rashid Khokhar</div>
                     <div className="text-white/60 text-xs mt-0.5">Founder & Director</div>
@@ -211,8 +223,6 @@ export default function HomePage() {
         <section className="py-24 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-
-              {/* Photo */}
               <motion.div
                 className="w-full lg:w-2/5"
                 initial={{ opacity: 0, x: -30 }}
@@ -231,7 +241,6 @@ export default function HomePage() {
                 </div>
               </motion.div>
 
-              {/* Content */}
               <motion.div
                 className="w-full lg:w-3/5"
                 initial={{ opacity: 0, x: 30 }}
@@ -259,12 +268,11 @@ export default function HomePage() {
                   <Link href="/director">Read Full Profile <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
               </motion.div>
-
             </div>
           </div>
         </section>
 
-        {/* ── Courses Preview ── */}
+        {/* ── Courses We Offer Section ── */}
         <section className="py-20 bg-white border-t border-border">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -273,7 +281,7 @@ export default function HomePage() {
               <div className="h-px w-12 bg-primary" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              Internationally Recognized Certifications
+              Courses We Offer
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-12 text-lg">
               From NEBOSH & IOSH to national safety diplomas — we have a course that fits your career goal.

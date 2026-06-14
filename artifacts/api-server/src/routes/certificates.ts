@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, certificatesTable, verificationLogsTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   ListCertificatesQueryParams,
   CreateCertificateBody,
@@ -49,7 +49,7 @@ router.get("/certificates/verify", async (req, res) => {
   const [cert] = await db
     .select()
     .from(certificatesTable)
-    .where(eq(certificatesTable.certificateNumber, number));
+    .where(sql`LOWER(${certificatesTable.certificateNumber}) = LOWER(${number})`);
 
   const found = !!cert;
   const ipAddress = req.ip ?? null;

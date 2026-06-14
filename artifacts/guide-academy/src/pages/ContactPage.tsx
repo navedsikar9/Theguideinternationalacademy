@@ -229,7 +229,7 @@ export default function ContactPage() {
                       <MapPin className="text-primary w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-foreground mb-1">Our Location</h4>
+                      <h4 className="font-semibold text-foreground mb-1">India — Sikar</h4>
                       <p className="text-muted-foreground leading-relaxed text-sm">
                         Opposite Indian Mobile, Railway Station,<br />
                         Kalyan Circle, Station Road,<br />
@@ -240,13 +240,26 @@ export default function ContactPage() {
 
                   <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                      <MapPin className="text-primary w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-1">Dubai Branch</h4>
+                      <p className="text-muted-foreground leading-relaxed text-sm">
+                        S15, Spain Cluster,<br />
+                        International City, Dubai,<br />
+                        United Arab Emirates
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                       <Phone className="text-primary w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-foreground mb-1">Phone Number</h4>
-                      <p className="text-muted-foreground">
-                        <a href="tel:+919509174366" className="hover:text-primary transition-colors font-medium">+91 9509174366</a>
-                      </p>
+                      <h4 className="font-semibold text-foreground mb-1">Phone Numbers</h4>
+                      <a href="tel:+919509174366" className="hover:text-primary transition-colors font-medium text-muted-foreground block">+91 9509174366</a>
+                      <a href="tel:+917339915890" className="hover:text-primary transition-colors font-medium text-muted-foreground block">+91 73399 15890</a>
                     </div>
                   </div>
 

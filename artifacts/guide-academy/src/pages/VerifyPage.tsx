@@ -27,7 +27,7 @@ export default function VerifyPage() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchInput.trim()) {
-      setSearchQuery(searchInput.trim().toUpperCase());
+      setSearchQuery(searchInput.trim());
     }
   };
 

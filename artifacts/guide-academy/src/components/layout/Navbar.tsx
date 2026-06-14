@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGetSettings } from "@workspace/api-client-react";
 
 interface NavbarProps {
   solid?: boolean;
@@ -12,8 +13,8 @@ export default function Navbar({ solid = false }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
 
-  // On home page: start transparent, turn solid on scroll
-  // On all other pages: always solid
+  const { data: settings } = useGetSettings({ query: { queryKey: ["site-settings-nav"] } });
+
   const isHome = location === "/" || location === "";
   const alwaysSolid = solid || !isHome;
   const showSolid = alwaysSolid || isScrolled;
@@ -24,7 +25,6 @@ export default function Navbar({ solid = false }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
@@ -40,29 +40,39 @@ export default function Navbar({ solid = false }: NavbarProps) {
     { href: "/verify-certificate", label: "Verify Certificate" },
   ];
 
+  const logoUrl = settings?.logoUrl || "/logo.jpg";
+
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         showSolid
-          ? "bg-sidebar/98 backdrop-blur-md shadow-md py-3"
-          : "bg-transparent py-5"
+          ? "bg-sidebar/98 backdrop-blur-md shadow-md py-2"
+          : "bg-transparent py-4"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link href="/">
-            <div className="flex flex-col cursor-pointer" data-testid="link-home">
-              <span className="text-xl md:text-2xl font-serif font-bold tracking-tight text-white leading-tight">
-                THE GUIDE
-              </span>
-              <span className="text-[10px] uppercase tracking-widest font-medium text-white/70">
-                International Academy
-              </span>
+            <div className="flex items-center gap-3 cursor-pointer" data-testid="link-home">
+              <img
+                src={logoUrl}
+                alt="THE GUIDE International Academy Logo"
+                className="w-12 h-12 object-contain rounded-sm"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <div className="flex flex-col">
+                <span className="text-xl md:text-2xl font-serif font-bold tracking-tight text-white leading-tight">
+                  THE GUIDE
+                </span>
+                <span className="text-[10px] uppercase tracking-widest font-medium text-white/70">
+                  International Academy
+                </span>
+              </div>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -89,7 +99,6 @@ export default function Navbar({ solid = false }: NavbarProps) {
           <button
             className="lg:hidden p-2 text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            data-testid="btn-mobile-menu"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
