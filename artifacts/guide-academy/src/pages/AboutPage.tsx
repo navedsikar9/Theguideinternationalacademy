@@ -14,7 +14,6 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar solid />
-
       {/* Page Header */}
       <section className="bg-sidebar pt-32 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent z-0" />
@@ -34,7 +33,6 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
-
       <main className="flex-1">
 
         {/* Who We Are */}
@@ -184,7 +182,7 @@ export default function AboutPage() {
         {/* Accreditations */}
         <section className="py-16 bg-white border-t border-border">
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <p className="text-muted-foreground uppercase tracking-widest text-sm font-semibold mb-10">Authorized Training Partner</p>
+            <p className="text-muted-foreground uppercase tracking-widest text-sm font-semibold mb-10">courses we offered</p>
             <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center">
               {["NEBOSH", "IOSH", "OSHA", "OTHM", "NVQ"].map((name) => (
                 <div key={name} className="text-3xl font-serif font-bold text-primary/70 border-b-2 border-primary pb-1 hover:text-primary transition-colors">
@@ -215,7 +213,6 @@ export default function AboutPage() {
         </section>
 
       </main>
-
       <Footer />
     </div>
   );
