@@ -20,6 +20,7 @@ router.get("/courses", async (req, res) => {
 
   const { category, featured } = query.data;
   let rows = await db.select().from(coursesTable).orderBy(coursesTable.sortOrder);
+
   if (category) rows = rows.filter((r) => r.category === category);
   if (featured !== undefined) rows = rows.filter((r) => r.featured === featured);
 
@@ -96,7 +97,7 @@ function serializeCourse(c: any) {
     imageUrl: c.imageUrl,
     featured: c.featured,
     sortOrder: c.sortOrder,
-    createdAt: c.createdAt?.toISOString(),
+    createdAt: c.createdAt instanceof Date ? c.createdAt.toISOString() : c.createdAt,
   };
 }
 
