@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db, coursesTable } from "@workspace/db";
-import { eq, ilike, or } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import {
   ListCoursesQueryParams,
   CreateCourseBody,
@@ -19,12 +19,17 @@ router.get("/courses", async (req, res) => {
   }
 
   const { category, featured } = query.data;
-  let rows = await db.select().from(coursesTable).orderBy(coursesTable.sortOrder);
+  const allRows = await db.select().from(coursesTable).orderBy(coursesTable.sortOrder);
 
-  if (category) rows = rows.filter((r) => r.category === category);
-  if (featured !== undefined) rows = rows.filter((r) => r.featured === featured);
+  let rows = allRows;
+  if (category) {
+    rows = rows.filter((r: any) => r.category === category);
+  }
+  if (featured !== undefined) {
+    rows = rows.filter((r: any) => r.featured === featured);
+  }
 
-  return res.json(rows.map((r) => serializeCourse(r)));
+  return res.json(rows.map((r: any) => serializeCourse(r)));
 });
 
 router.post("/courses", async (req, res) => {
@@ -82,6 +87,7 @@ router.delete("/courses/:id", async (req, res) => {
 });
 
 function serializeCourse(c: any) {
+  if (!c) return null;
   return {
     id: c.id,
     title: c.title,
@@ -97,7 +103,7 @@ function serializeCourse(c: any) {
     imageUrl: c.imageUrl,
     featured: c.featured,
     sortOrder: c.sortOrder,
-    createdAt: c.createdAt instanceof Date ? c.createdAt.toISOString() : c.createdAt,
+    createdAt: c.createdAt && typeof c.createdAt.toISOString === 'function' ? c.createdAt.toISOString() : c.createdAt,
   };
 }
 
